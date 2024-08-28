@@ -94,18 +94,18 @@ public class _007CatchRainwater {
      * 1. 初始化左指针  left  为 0，右指针  right  为  height  数组的长度减 1。
      * 2. 初始化左边最大高度  leftMax  为 0，右边最大高度  rightMax  为 0，雨水量  result  为 0。
      * 3. 使用一个循环，当  left  小于等于  right  时，执行以下操作：
-     *    - 如果  height[left]  小于等于  height[right] ，表示左边的高度较小，可以确定左边的柱子能够接到雨水。
-     *      - 如果  height[left]  大于等于  leftMax ，更新  leftMax  为  height[left] 。
-     *      - 否则，将  result  增加  leftMax - height[left] ，表示接到的雨水量。
-     *      - 将  left  向右移动一位。
-     *    - 否则，表示右边的高度较小，可以确定右边的柱子能够接到雨水。
-     *      - 如果  height[right]  大于等于  rightMax ，更新  rightMax  为  height[right] 。
-     *      - 否则，将  result  增加  rightMax - height[right] ，表示接到的雨水量。
-     *      - 将  right  向左移动一位。
+     * - 如果  height[left]  小于等于  height[right] ，表示左边的高度较小，可以确定左边的柱子能够接到雨水。
+     * - 如果  height[left]  大于等于  leftMax ，更新  leftMax  为  height[left] 。
+     * - 否则，将  result  增加  leftMax - height[left] ，表示接到的雨水量。
+     * - 将  left  向右移动一位。
+     * - 否则，表示右边的高度较小，可以确定右边的柱子能够接到雨水。
+     * - 如果  height[right]  大于等于  rightMax ，更新  rightMax  为  height[right] 。
+     * - 否则，将  result  增加  rightMax - height[right] ，表示接到的雨水量。
+     * - 将  right  向左移动一位。
      * 4. 返回雨水量  result 。
      */
     //gpt 双指针
-    public int trap3(int[] height){
+    public int trap3(int[] height) {
         int left = 0;
         int right = height.length - 1;
         int leftMax = 0;
@@ -133,11 +133,31 @@ public class _007CatchRainwater {
         return result;
     }
 
+    public int trap4(int[] height) {
+        int left = 0, right = height.length - 1;
+        int leftMax = 0, rightMax = 0;
+        int water = 0;
+
+        while (left < right) {
+            if (height[left] <= height[right]) {
+                leftMax = Math.max(leftMax, height[left]);
+                water += leftMax - height[left];
+                left++;
+            } else {
+                rightMax = Math.max(rightMax, height[right]);
+                water += rightMax - height[right];
+                right--;
+            }
+        }
+
+        return water;
+    }
+
     public static void main(String[] args) {
         _007CatchRainwater catchRainwater = new _007CatchRainwater();
 //        int[] height = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
 //        System.out.println(catchRainwater.trap(height));
-        int[] height2 = {4,2,0,3,2,5};
+        int[] height2 = {4, 2, 0, 3, 2, 5};
         System.out.println(catchRainwater.trap2(height2));
 
     }
